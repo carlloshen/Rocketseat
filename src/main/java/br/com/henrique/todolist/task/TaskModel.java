@@ -10,10 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity(name = "tb_tasks")
+@Entity
+@Table(name = "tb_tasks", schema = "tdlist")
 public class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

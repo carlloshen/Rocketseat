@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "tb_users")
+@Table(name = "tb_users", schema = "tdlist")
 public class UserModel {
 
     @Id
