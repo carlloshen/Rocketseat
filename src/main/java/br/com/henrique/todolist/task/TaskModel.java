@@ -30,7 +30,7 @@ public class TaskModel {
     
     private String priority;
     
-    private String idUser;
+    private UUID idUser;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
