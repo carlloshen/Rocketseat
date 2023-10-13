@@ -60,7 +60,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
                 }
             }
         } else {
-            if (servletPath.startsWith("/user/save")) {
+            if (servletPath.startsWith("/user/save") || servletPath.startsWith("/h2"))  {
                 filterChain.doFilter(request, response);
             } else {
                 response.sendError(401);
