@@ -13,12 +13,16 @@ COPY . .
 # Instale o Maven
 RUN apt-get install maven -y
 
+RUN mvn dependency:purge-local-repository
+
+# Compile o código usando o Maven
+RUN mvn clean install
 
 # Segunda etapa: imagem final
 FROM openjdk:17-slim
 
 # Copie o arquivo JAR compilado da etapa anterior
-COPY --from=build /app/target/todolist-1.0.0.jar app.jar
+COPY --from=build /target/todolist-1.0.0.jar app.jar
 
 # Exponha a porta do aplicativo
 EXPOSE 8080
