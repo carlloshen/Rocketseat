@@ -15,7 +15,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "tb_tasks", schema = "tdlist")
+@Table(name = "tb_tasks")
 public class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
