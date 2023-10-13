@@ -7,7 +7,7 @@ FROM openjdk:17-alpine
 
 COPY . .
 
-RUN apt-get install maven -y
+RUN apt-get -y install maven 
 
 RUN mvn clean install
 
