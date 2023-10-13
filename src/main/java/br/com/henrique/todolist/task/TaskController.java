@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,21 +48,30 @@ public class TaskController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<TaskModel>> list(HttpServletRequest request){
+    public ResponseEntity<List<TaskModel>> list(HttpServletRequest request) {
         Object idUser = request.getAttribute("idUser");
-        List<TaskModel> listsUser = taskRepository.findByIdUser((UUID)idUser);
+        List<TaskModel> listsUser = taskRepository.findByIdUser((UUID) idUser);
 
         return ResponseEntity.status(HttpStatus.OK).body(listsUser);
-     }
+    }
 
-     @PutMapping("/{id}")
-     public ResponseEntity<TaskModel> update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request){
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskModel> update(@RequestBody TaskModel taskModel, @PathVariable UUID id,
+            HttpServletRequest request) {
+
         TaskModel task = this.taskRepository.findById(id).orElse(null);
+        Object idUser = request.getAttribute("idUser");
 
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        if (!task.getIdUser().equals(idUser)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         Utils.copyNonNullProperties(taskModel, task);
         TaskModel taskSaved = this.taskRepository.save(task);
         return ResponseEntity.status(HttpStatus.OK).body(taskSaved);
-     }
-     
+    }
 
 }

@@ -28,9 +28,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String servletPath = request.getServletPath();
-        System.out.println("Primeiro console");
         if (servletPath.startsWith("/tasks")) {
-            System.out.println("segundo console");
             // pegar autenticacao (user e senha)
             String authorizationHeader = request.getHeader("Authorization");
 

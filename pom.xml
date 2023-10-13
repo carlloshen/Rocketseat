@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.henrique</groupId>
 	<artifactId>todolist</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>todolist</name>
 	<description>Gerenciamento de tarefas</description>
 	<properties>
@@ -50,6 +50,10 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 	</dependencies>
 
