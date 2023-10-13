@@ -17,10 +17,10 @@ RUN apt-get install -y maven && mvn clean install -DskipTests
 FROM openjdk:17-jdk-slim
 
 # Copie o arquivo JAR construído no estágio anterior
-COPY --from=build /app/target/todolist-1.0.0.jar /app.jar
+COPY --from=build /app/target/todolist-1.0.0.jar app.jar
 
 # Exponha a porta em que a aplicação será executada
 EXPOSE 8080
 
 # Comando de entrada para executar a aplicação
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar","app.jar"]
