@@ -1,13 +1,13 @@
 FROM ubuntu:latest AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+RUN apt update
+RUN apt install openjdk-17-jdk -y
 
 FROM openjdk:17-alpine
 
 COPY . .
 
-RUN apt-get -y install maven 
+RUN apt install maven -y 
 
 RUN mvn clean install
 
