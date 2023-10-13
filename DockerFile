@@ -1,9 +1,7 @@
-FROM ubuntu:latest as build
+FROM openjdk:17-alpine
 
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
-
-FROM openjdk:17-jdk-slim
 
 COPY . .
 
