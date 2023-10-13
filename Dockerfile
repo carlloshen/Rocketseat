@@ -13,6 +13,8 @@ COPY . .
 # Instale o Maven
 RUN apt-get install maven -y
 
+RUN mvn dependency:purge-local-repository
+
 # Compile o código usando o Maven
 RUN mvn clean install
 
