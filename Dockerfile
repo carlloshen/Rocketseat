@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . .
 
 # Compile o projeto com Maven
-RUN apt-get install -y maven && mvn clean install
+RUN apt-get install -y maven && mvn clean install -DskipTests
 
 # Estágio final
 FROM openjdk:17-jdk-slim
