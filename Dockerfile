@@ -1,31 +1,26 @@
-# Primeira etapa: compilação
+# Estágio de build
 FROM ubuntu:latest AS build
 
-# Atualize as listas de pacotes
-RUN apt-get update
+# Atualize os repositórios e instale o JDK
+RUN apt-get update && apt-get install -y openjdk-17-jdk
 
-# Configure o diretório de trabalho
+# Diretório de trabalho para a construção
 WORKDIR /app
 
 # Copie o código-fonte para o contêiner
 COPY . .
 
-# Instale o Maven
-RUN apt-get install maven -y
+# Compile o projeto com Maven
+RUN apt-get install -y maven && mvn clean install
 
-RUN mvn dependency:purge-local-repository
+# Estágio final
+FROM openjdk:17-jdk-slim
 
-# Compile o código usando o Maven
-RUN mvn clean install
+# Copie o arquivo JAR construído no estágio anterior
+COPY --from=build /app/target/todolist-1.0.0.jar /app.jar
 
-# Segunda etapa: imagem final
-FROM openjdk:17-slim
-
-# Copie o arquivo JAR compilado da etapa anterior
-COPY --from=build /target/todolist-1.0.0.jar app.jar
-
-# Exponha a porta do aplicativo
+# Exponha a porta em que a aplicação será executada
 EXPOSE 8080
 
-# Comando para executar o aplicativo
-CMD ["java", "-jar", "app.jar"]
+# Comando de entrada para executar a aplicação
+ENTRYPOINT ["java", "-jar", "/app.jar"]
