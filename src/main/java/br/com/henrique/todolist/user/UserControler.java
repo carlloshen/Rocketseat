@@ -1,5 +1,6 @@
 package br.com.henrique.todolist.user;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import br.com.henrique.todolist.utils.Utils;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -19,24 +21,24 @@ import lombok.RequiredArgsConstructor;
 public class UserControler {
 
     private final UserRepository userRepository;
-    
-    @GetMapping("/")
-    public ResponseEntity<String> ola(){
-        return ResponseEntity.ok("Hello world");
-    }
-
+   
     @PostMapping("/save")
-    public ResponseEntity<UserModel> saveUser(@RequestBody UserModel userModel){
-        Optional<UserModel> userExists = userRepository.findByUsername(userModel.getUsername());
+    public ResponseEntity<String> saveUser(@RequestBody UserModel userModel){
+        Optional<UserModel> userExists = userRepository.findByUserName(userModel.getUserName());
+        String[] nullProperties = Utils.getNullPropertyNames(userModel);
 
         if(userExists.isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario já cadastrado");
         }
-        System.out.println(userModel.getPassword());
+
+        if(nullProperties.length > 2 || userModel.getUserName().trim() == "" || userModel.getName().trim() == "" || userModel.getPassword().trim() == ""){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Preencha todos os campos");
+        }
+
         String bcryptHashString = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
         userModel.setPassword(bcryptHashString);
-
-        UserModel user = userRepository.save(userModel);
-        return ResponseEntity.ok(user);
+        userRepository.save(userModel);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

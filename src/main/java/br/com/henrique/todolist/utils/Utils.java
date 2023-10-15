@@ -1,6 +1,8 @@
 package br.com.henrique.todolist.utils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -22,7 +22,7 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(unique = true)
-    private String username;
+    private String userName;
     private String name;
     private String password;
     @CreationTimestamp

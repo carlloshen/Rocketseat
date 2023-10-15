@@ -43,7 +43,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
             String password = credentials[1];
 
             // validar o user
-            Optional<UserModel> userExists = this.userRepository.findByUsername(userName);
+            Optional<UserModel> userExists = this.userRepository.findByUserName(userName);
             if (!userExists.isPresent()) {
                 response.sendError(401);
             } else {
